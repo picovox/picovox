@@ -23,10 +23,10 @@
 #define PICO_AUDIO_I2S_DATA_PIN 28
 
 // Definition of unused pin
-#define PICO_UNUSED_PIN 20
+#define PICO_UNUSED_PIN 22
 
 // Definitions of GPIO mode switch button (GPIO - ground)
-#define CHANGE_BUTTON_PIN 17
+#define CHANGE_BUTTON_PIN 18
 
 // Control of correct LPT_STROBE_PIN definition
 #if LPT_STROBE_PIN == (LPT_BASE_PIN - 1)

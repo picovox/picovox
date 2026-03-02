@@ -144,7 +144,7 @@ int main()
     int16_t right_sample = 0;
     audio_buffer_t *buffer = NULL;
 
-    while(true) {
+    while (true) {
         if (current_device != wanted_device) {
             change_device();
         }
