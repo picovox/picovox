@@ -4,18 +4,18 @@
 #define SAMPLE_RATE 96000
 
 // Definitions of GPIO LPT pins
-#define LPT_BASE_PIN 0
-#define LPT_STROBE_PIN 8    // Beware! STROBE pin must be exactly one position before or after the DATA pins! (Check control down.)
-#define LPT_AUTOFEED_PIN 9
-#define LPT_INIT_PIN 10
-#define LPT_SELIN_PIN 11
-#define LPT_ERROR_PIN 12
-#define LPT_ACK_PIN 13
-#define LPT_BUSY_PIN 14
-#define LPT_PAPEREND_PIN 15
-#define LPT_SELECT_PIN 16
+#define LPT_BASE_PIN 1
+#define LPT_STROBE_PIN 9    // Beware! STROBE pin must be exactly one position before or after the DATA pins! (Check control down.)
+#define LPT_AUTOFEED_PIN 10
+#define LPT_INIT_PIN 11
+#define LPT_SELIN_PIN 12
+#define LPT_ERROR_PIN 13
+#define LPT_ACK_PIN 14
+#define LPT_BUSY_PIN 15
+#define LPT_PAPEREND_PIN 16
+#define LPT_SELECT_PIN 17
 
-#define LPT_DATA_DIR 17     // Pin for switching the D0-D7 direction (PC->picovox × picovox->PC)
+#define LPT_DATA_DIR 0     // Pin for switching the D0-D7 direction (PC->picovox × picovox->PC)
 
 // Definitions of GPIO I2S pins
 #define PICO_AUDIO_I2S_CLOCK_PIN_BASE 26
