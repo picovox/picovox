@@ -1,4 +1,4 @@
-.define INIT 12             ; Set to proper INIT
+.define INIT 11             ; Set to proper INIT
 
 .program cms_one
 

@@ -1,5 +1,5 @@
-.define STROBE 0            ; Set to proper STROBE
-.define INIT 12             ; Set to proper INIT
+.define STROBE 9            ; Set to proper STROBE
+.define INIT 11             ; Set to proper INIT
 
 .program tandy_sound
 

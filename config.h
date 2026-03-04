@@ -18,9 +18,9 @@
 #define LPT_DATA_DIR 0     // Pin for switching the D0-D7 direction (PC->picovox × picovox->PC)
 
 // Definitions of GPIO I2S pins
-#define PICO_AUDIO_I2S_CLOCK_PIN_BASE 26
+#define PICO_AUDIO_I2S_CLOCK_PIN_BASE 27
 #define PICO_AUDIO_I2S_CLOCK_PINS_SWAPPED 0
-#define PICO_AUDIO_I2S_DATA_PIN 28
+#define PICO_AUDIO_I2S_DATA_PIN 26
 
 // Definition of unused pin
 #define PICO_UNUSED_PIN 22

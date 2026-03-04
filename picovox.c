@@ -19,8 +19,8 @@ volatile absolute_time_t last_change_press;
 
 #define NUM_DEVICES 7
 Device *devices[NUM_DEVICES];
-int8_t current_device = 5;
-int8_t wanted_device = 5;
+int8_t current_device = 0;
+int8_t wanted_device = 0;
 
 bool load_device_list() {
     devices[0] = create_covox();
