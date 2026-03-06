@@ -65,7 +65,7 @@ static void core1_operation(void) {
             load_new_instruction(&register_address);
         }
         OPL_Pico_simple(&current_sample, 1);
-        while (ringbuffer_full() && !stop_core1) {
+        while (ringbuffer_is_full() && !stop_core1) {
             load_new_instruction(&register_address);
         }
         ringbuffer_push(current_sample << 2);
@@ -128,7 +128,7 @@ bool unload_opl2(Device *self) {
 size_t generate_opl2(Device *self, int16_t *left_sample, int16_t *right_sample) {
 
     if (sample_used >= SAMPLE_REPEAT) {
-        while (ringbuffer_empty()) {
+        while (ringbuffer_is_empty()) {
             tight_loop_contents();
         }
         if (!ringbuffer_pop(&last_sample)) {

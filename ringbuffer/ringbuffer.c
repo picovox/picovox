@@ -2,14 +2,15 @@
 
 #define MAX_SIZE 4096
 
-static size_t head = 0;
-static size_t tail = 0;
+static volatile size_t head = 0;
+static volatile size_t tail = 0;
 static size_t size = 0;
-static bool empty = true;
+static volatile bool empty = true;
 
 static int16_t buffer[MAX_SIZE];
 
 bool ringbuffer_init(size_t wanted_size) {
+
     if (wanted_size > MAX_SIZE || (wanted_size & (wanted_size - 1)) != 0) { // Check for power of 2.
         return false;
     }
@@ -20,16 +21,17 @@ bool ringbuffer_init(size_t wanted_size) {
     return true;
 }
 
-bool ringbuffer_empty() {
+bool ringbuffer_is_empty(void) {
     return empty;
 }
 
-bool ringbuffer_full() {
+bool ringbuffer_is_full(void) {
     return head == tail && !empty;
 }
 
 bool ringbuffer_push(int16_t pushed_data) {
-    if (ringbuffer_full()) {
+
+    if (ringbuffer_is_full()) {
         return false;
     }
 
@@ -43,7 +45,8 @@ bool ringbuffer_push(int16_t pushed_data) {
 }
 
 bool ringbuffer_pop(int16_t *popped_data) {
-    if (ringbuffer_empty()) {
+
+    if (ringbuffer_is_empty()) {
         return false;
     }
 

@@ -17,6 +17,7 @@
 // Time stored for software debounce
 volatile absolute_time_t last_change_press;
 
+// List of all devices
 #define NUM_DEVICES 7
 Device *devices[NUM_DEVICES];
 int8_t current_device = 0;
@@ -40,16 +41,48 @@ bool load_device_list() {
     return true;
 }
 
+// Mode switching request
 void request_change_device(uint gpio, uint32_t events) {
 
     if (get_absolute_time() - last_change_press < 500000) {
         return;
     }
-    last_change_press = get_absolute_time();
 
+    last_change_press = get_absolute_time();
     wanted_device = (wanted_device + 1) % NUM_DEVICES;
 }
 
+bool change_device(void) {
+
+    if (!devices[current_device]->unload_device(devices[current_device])) {
+        printf("Could not unload device %d\n", current_device);
+        wanted_device = 0;
+        return false;
+    }
+
+    printf("Unloaded device %d\n", current_device);
+    current_device = wanted_device;
+
+    if (!devices[current_device]->load_device(devices[current_device])) {
+        printf("Could not load device %d\n", current_device);
+        wanted_device = 0;
+        return false;
+    }
+
+    printf("Switched to %d\n", current_device);
+    return true;
+}
+
+// Start IRQ for mode switching
+void load_change_device_irq(void) {
+    gpio_init(CHANGE_BUTTON_PIN);
+    gpio_set_dir(CHANGE_BUTTON_PIN, GPIO_IN);
+    gpio_pull_up(CHANGE_BUTTON_PIN);
+    gpio_set_irq_enabled_with_callback(CHANGE_BUTTON_PIN, GPIO_IRQ_EDGE_FALL, true, &request_change_device);
+    last_change_press = get_absolute_time();
+}
+
+// I2S library setup
 audio_format_t requested_format = {
     .sample_freq = SAMPLE_RATE,
     .channel_count = CHANNEL_COUNT,
@@ -84,45 +117,15 @@ audio_buffer_pool_t *load_audio(void) {
     if (!audio_i2s_connect(buffer_pool)) {
         return NULL;
     }
-    
 
     audio_i2s_set_enabled(true);
     return buffer_pool;
 }
 
-void load_change_device_irq(void) {
-    gpio_init(CHANGE_BUTTON_PIN);
-    gpio_set_dir(CHANGE_BUTTON_PIN, GPIO_IN);
-    gpio_pull_up(CHANGE_BUTTON_PIN);
-
-    gpio_set_irq_enabled_with_callback(CHANGE_BUTTON_PIN, GPIO_IRQ_EDGE_FALL, true, &request_change_device);
-
-    last_change_press = get_absolute_time();
-}
-
-bool change_device(void) {
-    if (!devices[current_device]->unload_device(devices[current_device])) {
-        printf("Could not unload device %d\n", current_device);
-        wanted_device = 0;
-        return false;
-    }
-    printf("Unloaded device %d\n", current_device);
-
-    current_device = wanted_device;
-
-    if (!devices[current_device]->load_device(devices[current_device])) {
-        printf("Could not load device %d\n", current_device);
-        wanted_device = 0;
-        return false;
-    }
-    printf("Switched to %d", current_device);
-    return true;
-}
-
-int main()
-{
+// Main function
+int main() {
     stdio_init_all();
-    set_sys_clock_khz(250000, true);
+    set_sys_clock_khz(250000, true); // Overclock 250 MHz (tested as safe and stable)
     sleep_ms(1000);
 
     if (!load_device_list()) {
@@ -134,6 +137,7 @@ int main()
     }
 
     audio_buffer_pool_t *buffer_pool = load_audio();
+
     if (buffer_pool == NULL) {
         return 1;
     }
@@ -145,23 +149,28 @@ int main()
     audio_buffer_t *buffer = NULL;
 
     while (true) {
+
+        // Device should change => change device
         if (current_device != wanted_device) {
             change_device();
         }
+
+        // Wait for free buffer
         while ((buffer = take_audio_buffer(buffer_pool, false)) == NULL) {
             tight_loop_contents();
         }
 
         int16_t *samples = (int16_t *)buffer->buffer->bytes;
 
+        // Fill the buffer
         for (uint i = 0; i < buffer->max_sample_count; i++) {
             devices[current_device]->generate_sample(devices[current_device], &left_sample, &right_sample);
             samples[2 * i]     = left_sample;
             samples[2 * i + 1] = right_sample;
         }
 
+        // Send filled buffer
         buffer->sample_count = buffer->max_sample_count;
         give_audio_buffer(buffer_pool, buffer);
     }
-    
 }

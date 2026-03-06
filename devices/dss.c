@@ -42,13 +42,13 @@ void __isr ringbuffer_filler(void) {
 }
 
 static bool new_sample(repeating_timer_t *timer_for_buffer) {
-    if (ringbuffer_empty()) {
+    if (ringbuffer_is_empty()) {
         current_sample = 0;
         is_new_sample = true;
         return true;
     }
 
-    if (ringbuffer_full()) {
+    if (ringbuffer_is_full()) {
         gpio_put(LPT_ACK_PIN, false);
     }
 

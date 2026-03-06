@@ -19,14 +19,14 @@ bool ringbuffer_init(size_t size);
  *
  * @return true if ringbuffer is empty, else false.
  */
-bool ringbuffer_empty();
+bool ringbuffer_is_empty();
 
 /**
  * @brief Checks whether the ringbuffer is full.
  *
  * @return true if ringbuffer is full, else false.
  */
-bool ringbuffer_full();
+bool ringbuffer_is_full();
 
 /**
  * @brief Pushes given data into ringbuffer.
