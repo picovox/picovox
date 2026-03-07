@@ -13,7 +13,11 @@
 #include "hardware/pio.h"
 #include "cms.pio.h"
 
+// Buffer storing samples generated
 #define CMS_RINGBUFFER_SIZE 2048
+
+// Sample repeated 2 times -> for 96kHz, only 48 kHz needed (still high quality, but fast enough)
+#define SAMPLE_REPEAT 2
 
 // Variables for PIO - each chip has its own
 static PIO first_pio;
@@ -25,7 +29,8 @@ static int8_t second_sm;
 static int second_offset;
 
 // Since emulator runs at half the rate, repeat all samples twice
-static int sample_used = false;
+static int16_t last_sample = 0;
+static int8_t sample_used = 0;
 
 // Killswitch for core 1
 static volatile bool stop_core1 = false;
@@ -63,10 +68,12 @@ static void write_to_chip(gameblaster_t *device, int16_t current_instruction, bo
 
 static void load_new_instruction(gameblaster_t *device) {
 
+    // Data for first chip
     if (!pio_sm_is_rx_fifo_empty(first_pio, first_sm)) {
         write_to_chip(device, pio_sm_get(first_pio, first_sm) >> 23, true);
     }
 
+    // Data for second chip
     if (!pio_sm_is_rx_fifo_empty(second_pio, second_sm)) {
         write_to_chip(device, pio_sm_get(second_pio, second_sm) >> 23, false);
     }
@@ -96,7 +103,6 @@ static void core1_operation(void) {
         ringbuffer_push(current_right_sample >> 1);
     }
 
-
     // Core 1 should be stopped -> remove device from memory
     gameblaster_destroy(device);
 }
@@ -104,7 +110,7 @@ static void core1_operation(void) {
 bool load_cms(Device *self) {
     ringbuffer_init(CMS_RINGBUFFER_SIZE);
 
-    // Load PIO programs
+    // Load PIO programs (each chip has its own)
     first_offset = pio_manager_load(&first_pio, &first_sm, &cms_one_program);
 
     if (first_offset < 0) {
@@ -179,7 +185,6 @@ bool load_cms(Device *self) {
 
     pio_sm_set_enabled(second_pio, second_sm, true);
 
-
     // Start core 1
     stop_core1 = false;
     multicore_reset_core1();
@@ -208,33 +213,36 @@ bool unload_cms(Device *self) {
     gpio_deinit(LPT_AUTOFEED_PIN);
     gpio_deinit(LPT_INIT_PIN);
     gpio_deinit(LPT_SELIN_PIN);
-
     return true;
 }
 
 size_t generate_cms(Device *self, int16_t *left_sample, int16_t *right_sample) {
 
-    // Sample not repeated -> repeat previous samples
-    if (!sample_used) {
-        sample_used = true;
-        return 0;
+    if (sample_used >= SAMPLE_REPEAT) {
+
+        // Wait for sample if none is generated (cannot lock since samples are generated automatically)
+        while (ringbuffer_is_empty()) {
+            tight_loop_contents();
+        }
+
+        // Cannot happen, added as a failsafe
+        if (!ringbuffer_pop(left_sample)) {
+            *left_sample = 0;
+            *right_sample = 0;
+        } else {
+
+            // If left sample is present, right must be present too - wait if none
+            while (ringbuffer_is_empty()) {
+                tight_loop_contents();
+            }
+
+            ringbuffer_pop(right_sample);
+        }
+
+        sample_used = 0;
     }
 
-    sample_used = false;
-
-    // Wait for sample if none is generated
-    while (ringbuffer_is_empty()) {
-        tight_loop_contents();
-    }
-
-    if (!ringbuffer_pop(left_sample)) {
-        *left_sample = 0;
-    }
-
-    if (!ringbuffer_pop(right_sample)) {
-        *right_sample = 0;
-    }
-
+    sample_used++;
     return 0;
 }
 

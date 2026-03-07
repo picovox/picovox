@@ -16,7 +16,7 @@
 
 #define STEREO_RINGBUFFER_SIZE 2048
 
-// Variables for PIO - each device simulated has its own
+// Variables for PIO - each channel and detection
 static PIO sound_left_pio;
 static int8_t sound_left_sm;
 static int sound_left_offset;
@@ -152,16 +152,19 @@ bool unload_stereo(Device *self) {
     return true;
 }
 
-size_t generate_stereo(Device *self, int16_t *left_sample, int16_t *right_sample) {  
+size_t generate_stereo(Device *self, int16_t *left_sample, int16_t *right_sample) { 
+
     while (!ringbuffer_pop(left_sample)) {
         tight_loop_contents();
     }
+
     ringbuffer_pop(right_sample);
     return 0;
 }
 
-Device *create_stereo() {
+Device *create_stereo(void) {
     Device *stereo_struct = calloc(1, sizeof(Device));
+
     if (stereo_struct == NULL) {
         return NULL;
     }
@@ -169,6 +172,5 @@ Device *create_stereo() {
     stereo_struct->load_device = load_stereo;
     stereo_struct->unload_device = unload_stereo;
     stereo_struct->generate_sample = generate_stereo;
-
     return stereo_struct;
 }
