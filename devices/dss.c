@@ -1,16 +1,11 @@
 #include "config.h"
-
-#include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include "pio_manager.h"
 #include "ringbuffer.h"
 #include "device.h"
-#include "hardware/pio.h"
-#include "hardware/irq.h"
 #include "pico/time.h"
-#include "pico/stdlib.h"
 #include "dss.pio.h"
 
 // Buffer storing samples to process

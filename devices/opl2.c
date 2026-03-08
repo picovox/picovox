@@ -1,6 +1,4 @@
 #include "config.h"
-
-#include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -8,13 +6,8 @@
 #include "pio_manager.h"
 #include "ringbuffer.h"
 #include "opl/opl.h"
-#include "hardware/clocks.h"
-#include "hardware/pio.h"
 #include "pico/multicore.h"
 #include "opl2.pio.h"
-#include "pico/time.h"
-
-#include "pico/stdlib.h"
 
 // Buffer storing samples generated
 #define OPL_RINGBUFFER_SIZE 4096

@@ -1,13 +1,10 @@
 #include "config.h"
-
-#include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include "pio_manager.h"
 #include "device.h"
 #include "hardware/clocks.h"
-#include "hardware/pio.h"
 #include "covox.pio.h"
 
 // Variables for PIO

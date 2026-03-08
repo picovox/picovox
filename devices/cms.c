@@ -1,6 +1,4 @@
 #include "config.h"
-
-#include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -9,8 +7,6 @@
 #include "device.h"
 #include "square/square_c.h"
 #include "pico/multicore.h"
-#include "hardware/clocks.h"
-#include "hardware/pio.h"
 #include "cms.pio.h"
 
 // Buffer storing samples generated

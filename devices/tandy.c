@@ -1,6 +1,4 @@
 #include "config.h"
-
-#include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -10,7 +8,6 @@
 #include "square/square_c.h"
 #include "pico/multicore.h"
 #include "hardware/clocks.h"
-#include "hardware/pio.h"
 #include "tandy.pio.h"
 
 #define TND_RINGBUFFER_SIZE 2048

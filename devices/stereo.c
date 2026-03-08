@@ -1,6 +1,4 @@
 #include "config.h"
-
-#include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdlib.h>
@@ -8,10 +6,7 @@
 #include "pio_manager.h"
 #include "ringbuffer.h"
 #include "hardware/clocks.h"
-#include "hardware/pio.h"
-#include "hardware/irq.h"
 #include "hardware/pwm.h"
-#include "pico/time.h"
 #include "stereo.pio.h"
 
 #define STEREO_RINGBUFFER_SIZE 2048
