@@ -34,13 +34,16 @@ static int16_t last_right_sample = 0;
 static uint pwm_slice;
 
 static void get_samples(void) {
-    pwm_clear_irq(pwm_slice);
+    pwm_clear_irq(pwm_slice); // After each call clear IRQ
+
     if (!pio_sm_is_rx_fifo_empty(sound_left_pio, sound_left_sm)) {
         last_left_sample = (((pio_sm_get(sound_left_pio, sound_left_sm) >> 24) & 0xFF) - 128) << 8;
     }
+
     if (!pio_sm_is_rx_fifo_empty(sound_right_pio, sound_right_sm)) {
         last_right_sample = (((pio_sm_get(sound_right_pio, sound_right_sm) >> 24) & 0xFF) - 128) << 8;
     }
+
     ringbuffer_push(last_left_sample);
     ringbuffer_push(last_right_sample);
 }
@@ -127,7 +130,6 @@ bool load_stereo(Device *self) {
     uint16_t top = (clock_get_hz(clk_sys) + SAMPLE_RATE / 2) / SAMPLE_RATE - 1;
     pwm_set_clkdiv(pwm_slice, 1.0f);
     pwm_set_wrap(pwm_slice, top);
-    pwm_set_gpio_level(PICO_UNUSED_PIN, top/2);
     pwm_clear_irq(pwm_slice);
     pwm_set_irq_enabled(pwm_slice, true);
     irq_set_exclusive_handler(PWM_IRQ_WRAP, get_samples);
