@@ -3,7 +3,7 @@
 #define MAX_SIZE 4096
 
 static volatile size_t head = 0;
-static volatile size_t tail = 0;
+static volatile  size_t tail = 0;
 static size_t size = 0;
 static volatile bool empty = true;
 
@@ -18,6 +18,7 @@ bool ringbuffer_init(size_t wanted_size) {
     head = 0;
     tail = 0;
     size = wanted_size;
+    empty = true;
     return true;
 }
 
