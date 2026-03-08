@@ -188,6 +188,7 @@ size_t generate_tandy(Device *self, int16_t *left_sample, int16_t *right_sample)
 
     *left_sample = last_sample;
     *right_sample = last_sample;
+    sample_used++;
     return 0;
 }
 
