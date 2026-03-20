@@ -83,13 +83,14 @@ void load_change_device_irq(void) {
 }
 
 // I2S library setup
-audio_format_t requested_format = {
-    .sample_freq = SAMPLE_RATE,
-    .channel_count = CHANNEL_COUNT,
-    .format = AUDIO_BUFFER_FORMAT_PCM_S16
-};
+audio_buffer_pool_t *load_audio(void) {
 
-const audio_format_t *setup_format(void) {
+    static audio_format_t audio_requested_format = {
+        .sample_freq = SAMPLE_RATE,
+        .channel_count = CHANNEL_COUNT,
+        .format = AUDIO_BUFFER_FORMAT_PCM_S16
+    };
+
     static audio_i2s_config_t config = {
         .data_pin = PICO_AUDIO_I2S_DATA_PIN,
         .clock_pin_base = PICO_AUDIO_I2S_CLOCK_PIN_BASE,
@@ -97,18 +98,14 @@ const audio_format_t *setup_format(void) {
         .pio_sm = 0
     };
 
-    return audio_i2s_setup(&requested_format, &config);
-}
+    const audio_format_t *audio_given_format = audio_i2s_setup(&audio_requested_format, &config);
 
-audio_buffer_pool_t *load_audio(void) {
-    const audio_format_t *audio_format = setup_format();
-
-    if (audio_format == NULL) {
+    if (audio_given_format == NULL) {
         return NULL;
     }
 
     static audio_buffer_format_t buffer_format = {
-        .format = &requested_format,
+        .format = &audio_requested_format,
         .sample_stride = 4
     };
 
