@@ -26,7 +26,7 @@ bool init_mode_change() {
     pio_sm_config used_config = mode_switch_program_get_default_config(used_offset);
     sm_config_set_in_pins(&used_config, LPT_BASE_PIN);
     sm_config_set_fifo_join(&used_config, PIO_FIFO_JOIN_RX);
-    sm_config_set_clkdiv(&used_config, 10);
+    sm_config_set_clkdiv(&used_config, 100);
 
     for (int i = LPT_BASE_PIN; i < LPT_BASE_PIN + 12; i++) { // Set all data and control pins
         pio_gpio_init(used_pio, i);

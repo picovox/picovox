@@ -13,6 +13,12 @@ start:
     mov X, isr              ; Move data to x register (for manipulation)
     set Y, 5                ; Awaited sequence (STROBE 1, AUTOFEED 0, INIT 1, SELIN 0)
     jmp X!=Y start          ; If not wanted sequence, try again
+    nop[31]
+    in pins, 12             ; And repeat everything if CMS emulation is just playing
+    in null, 28             
+    mov X, isr         
+    set Y, 5
+    jmp X!=Y start
     in pins, 8              ; If wanted sequence load data pins
     push block              ; Send data
     wait 0 gpio STROBE      ; Wait for reset 
