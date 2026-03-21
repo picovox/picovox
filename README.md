@@ -14,10 +14,10 @@ For more information and current progress, check out: [Dedicated vogons thread](
 |Covox|✅ Almost perfect, 96 kHz sampling rate.|
 |FTL Sound Adapter|✅ Same as Covox with proper detection.|
 |Stereo-On-1|✅ Very close to Covox, with stereo and proper detection|
-|Disney Sound Source|❓ Not that great, but detection should be flawless.|
-|OPL2LPT|🆗 Close enough to original AdLib, 48 kHz sampling rate.|
-|TNDLPT|❓ Sound is very close to the original, detection failing.|
-|CMSLPT|❌ Experimental support, produces some sound.|
+|Disney Sound Source|✅ Not that great, but detection should be flawless.|
+|OPL2LPT|✅ Close enough to original AdLib, 48 kHz sampling rate.|
+|TNDLPT|✅ Sound is very close to the original, detection flawless.|
+|CMSLPT|❓ Experimental support, produces some sound, bad switching of control mode.|
 
 </details>
 
@@ -30,8 +30,7 @@ I know that it is probably not the best code you have ever seen. Pardon me, it's
 
 ## How can I build one?
 As of now, we are still in pre-alpha. 
-Sadly, I cannot provide any official building instructions. 
-I strongly discourage you from building your own prototype.
+Hardware prototype is currently being tested, after fixing a few bugs the design will be released.
 
 <details>
 <summary>Click here for pre-alpha unofficial building guide</summary>
@@ -48,8 +47,7 @@ The only thing you need to do is to connect pins of the LPT and the PCM5102 to t
 Don't forget to convert 5V of the LPT port to 3.3V of Pico, otherwise you risk something horrible I have not tested.
 
 The correct pinout is written in *config.h*. 
-Beware that you can change the pins (as long as you keep D0-D7 in the same order, from the lowest to the highest, and place Strobe next to Data pins), 
-but keep in mind that you also **need to change the definitions in each PIO file!** *(Yes, it is planned to be generated automatically.)*
+Beware that changing the pins is not possible anymore since they are used for mode switching.
 Also, you can connect a button for switching modes. **Connect the button to the ground, not 3.3V!** You do not need any capacitor, the software debounce is implemented.
 
 Also, don't forget to solder pads to your PCM5102 module in the following configuration: 1L, 2L, 3H, 4L
@@ -64,6 +62,8 @@ In case of Covox/FTL/DSS/Stereo-on-1 you can use them right out of the box. In c
 ~You can switch between modes via provided program.~ Not yet. But you can use that handy button to switch between modes yourself. 
 ~If you want to check current mode, you can simply use the program.~ Again, not yet. You can try to guess, scroll through all the modes until it works or you can connect the Pico to your PC and via serial console check currently loading device.
 
+**This magical program will be available soon.**
+
 > [!CAUTION]
 > Don't blow your ears off! Since volume is not standardized between devices, be cautious. 
 
@@ -71,9 +71,9 @@ In case of Covox/FTL/DSS/Stereo-on-1 you can use them right out of the box. In c
 Right now, we are in pre-alpha state. However we are slowly but surely approaching *alpha 1* with following milestones:
 
 - Support for seven LPT audio devices. ✅
-- Correct detection of them. 🔜
-- PCB design you can use. ⌛
-- Support for software control (switching modes etc.) ❌
+- Correct detection of them. ✅
+- PCB design you can use. 🔜
+- Support for software control (switching modes etc.) 🔜
 
 As the name *alpha 1* implies, there may be more alpha versions. I would like to finalize the device to generally usable state by the end of the alpha phase. Beta will focus mostly on testing and potentially adding more features.
 
