@@ -13,6 +13,7 @@
 #include "pico/audio_i2s.h"
 #include "device.h"
 #include "hardware/clocks.h"
+#include "mode_switch/mode_switch.h"
 
 // Time stored for software debounce
 volatile absolute_time_t last_change_press;
@@ -139,6 +140,8 @@ int main() {
         return 1;
     }
 
+    init_mode_change();
+
     load_change_device_irq();
     
     int16_t left_sample = 0;
@@ -147,6 +150,8 @@ int main() {
 
     while (true) {
 
+        mode_change(&wanted_device);
+        
         // Device should change => change device
         if (current_device != wanted_device) {
             change_device();

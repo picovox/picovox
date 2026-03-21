@@ -1,0 +1,14 @@
+.define STROBE 9            ; Set to proper SELIN
+
+.program mode_switch
+.wrap_target
+start:
+    in pins, 12             ; Read data (D0-D7, STROBE, AUTOFEED, INIT, SELIN)
+    in null, 28             ; Fill the ISR with zeros -> only 4 lowest bits (STROBE, AUTOFEED, INIT, SELIN) stay
+    mov X, isr              ; Move data to x register (for manipulation)
+    set Y, 5                ; Awaited sequence (STROBE 1, AUTOFEED 0, INIT 1, SELIN 0)
+    jmp X!=Y start          ; If not wanted sequence, try again
+    in pins, 8              ; If wanted sequence load data pins
+    push block              ; Send data
+    wait 0 gpio STROBE      ; Wait for reset 
+.wrap
