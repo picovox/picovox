@@ -1,6 +1,11 @@
 .define STROBE 9            ; Set to proper SELIN
 
 .program mode_switch
+
+; DSS - Mode switching capability of picovox.
+; INPUTS: D0-D7, STROBE, AUTOFEED, INIT, SELIN
+; OUTPUTS: none
+
 .wrap_target
 start:
     in pins, 12             ; Read data (D0-D7, STROBE, AUTOFEED, INIT, SELIN)
