@@ -69,18 +69,20 @@ static void send_number(int8_t current) {
 
     for (uint8_t checked_bit = 0x10; checked_bit > 0; checked_bit >>= 1) {
 
-        if (checked_bit & current != 0) {
-            gpio_put(LPT_SELECT_PIN, 1);
-        } else {
+        if ((checked_bit & current) != 0) {
+            gpio_put(LPT_SELECT_PIN, 0);
             gpio_put(LPT_ERROR_PIN, 1);
+        } else {
+            gpio_put(LPT_ERROR_PIN, 0);
+            gpio_put(LPT_SELECT_PIN, 1);
         }
 
         gpio_put(LPT_BUSY_PIN, 1);
-        sleep_ms(10);
+        sleep_ms(100);
         gpio_put(LPT_BUSY_PIN, 0);
         gpio_put(LPT_ERROR_PIN, 0);
         gpio_put(LPT_SELECT_PIN, 0);
-        sleep_ms(10);
+        sleep_ms(100);
     }
 
 }
@@ -92,7 +94,6 @@ void mode_change(int8_t *change_to, int8_t current) {
     }
 
     uint8_t wanted_mode = ((pio_sm_get(used_pio, used_sm) >> 24));
-
     if (check_parity(wanted_mode)) {
         gpio_put(LPT_SELECT_PIN, 1);
         sleep_ms(100);
@@ -101,6 +102,7 @@ void mode_change(int8_t *change_to, int8_t current) {
         gpio_put(LPT_ERROR_PIN, 1);
         sleep_ms(100);
         gpio_put(LPT_ERROR_PIN, 0);
+        return;
     }
 
     // Change emulated device
@@ -112,6 +114,7 @@ void mode_change(int8_t *change_to, int8_t current) {
 
     // Return status
     if (wanted_mode == 170) {
+        sleep_ms(50);
         send_number(current);
         return;
     }
