@@ -48,6 +48,9 @@ bool init_mode_change() {
     gpio_init(LPT_SELECT_PIN);
     gpio_put(LPT_SELECT_PIN, 0);
     gpio_set_dir(LPT_SELECT_PIN, true);
+    gpio_init(LPT_BUSY_PIN);
+    gpio_put(LPT_BUSY_PIN, 0);
+    gpio_set_dir(LPT_BUSY_PIN, true);
     return true;
 }
 
@@ -62,7 +65,27 @@ static bool check_parity(uint8_t command) {
     return result;
 }
 
-void mode_change(int8_t *change_to) {
+static void send_number(int8_t current) {
+
+    for (uint8_t checked_bit = 0x10; checked_bit > 0; checked_bit >>= 1) {
+
+        if (checked_bit & current != 0) {
+            gpio_put(LPT_SELECT_PIN, 1);
+        } else {
+            gpio_put(LPT_ERROR_PIN, 1);
+        }
+
+        gpio_put(LPT_BUSY_PIN, 1);
+        sleep_ms(50);
+        gpio_put(LPT_BUSY_PIN, 0);
+        gpio_put(LPT_ERROR_PIN, 0);
+        gpio_put(LPT_SELECT_PIN, 0);
+        sleep_ms(50);
+    }
+
+}
+
+void mode_change(int8_t *change_to, int8_t current) {
 
     if (pio_sm_is_rx_fifo_empty(used_pio, used_sm)) {
         return;
@@ -84,5 +107,12 @@ void mode_change(int8_t *change_to) {
     if ((wanted_mode >> 6) == 3) {
         uint8_t wanted_device = ((wanted_mode >> 1) & 31) - 2;
         *change_to = (wanted_device >= 0 && wanted_device < 7) ? wanted_device : 0;
+        return;
+    }
+
+    // Return status
+    if (wanted_mode == 132) {
+        send_number(current);
+        return;
     }
 }

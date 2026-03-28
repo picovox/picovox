@@ -1,5 +1,5 @@
 build
 todo.txt
 !.vscode/*
-stereo.c.old
-stereo.pio.old
+devices/debugger.c
+devices/pio/debugger.pio

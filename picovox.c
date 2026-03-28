@@ -150,7 +150,7 @@ int main() {
 
     while (true) {
 
-        mode_change(&wanted_device);
+        mode_change(&wanted_device, current_device);
         
         // Device should change => change device
         if (current_device != wanted_device) {

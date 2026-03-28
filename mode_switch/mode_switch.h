@@ -15,6 +15,6 @@ bool init_mode_change();
  * 
  * @param change_to is a pointer to a variable where id of device to switch to is stored.
  */
-void mode_change(int8_t *change_to);
+void mode_change(int8_t *change_to, int8_t current);
 
 #endif

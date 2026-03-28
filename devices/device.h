@@ -52,5 +52,6 @@ Device *create_dss();
 Device *create_opl2();
 Device *create_tandy();
 Device *create_cms();
+Device *create_debugger();
 
 #endif // DEVICE_H

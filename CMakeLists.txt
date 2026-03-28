@@ -56,7 +56,7 @@ add_executable(picovox
         devices/opl2.c 
         devices/tandy.c 
         devices/cms.c 
-        # devices/debugger.c 
+        devices/debugger.c 
         mode_switch/mode_switch.c
         square/square.cpp 
         square/square_c.cpp)
@@ -71,7 +71,7 @@ pico_generate_pio_header(${PROJECT_NAME}
     ${PIO_PATH}/tandy.pio
     ${PIO_PATH}/cms.pio
     ${CMAKE_CURRENT_LIST_DIR}/mode_switch/mode_switch.pio
-    # ${PIO_PATH}/debugger.pio
+    ${PIO_PATH}/debugger.pio
 )
 
 pico_set_program_name(picovox "picovox")
