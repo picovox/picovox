@@ -111,7 +111,7 @@ void mode_change(int8_t *change_to, int8_t current) {
     }
 
     // Return status
-    if (wanted_mode == 132) {
+    if (wanted_mode == 170) {
         send_number(current);
         return;
     }
