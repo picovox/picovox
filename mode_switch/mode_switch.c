@@ -76,11 +76,11 @@ static void send_number(int8_t current) {
         }
 
         gpio_put(LPT_BUSY_PIN, 1);
-        sleep_ms(50);
+        sleep_ms(10);
         gpio_put(LPT_BUSY_PIN, 0);
         gpio_put(LPT_ERROR_PIN, 0);
         gpio_put(LPT_SELECT_PIN, 0);
-        sleep_ms(50);
+        sleep_ms(10);
     }
 
 }
