@@ -59,10 +59,7 @@ If your device does not work, I have no clue why. It can be due to bad hardware,
 ## How do I use it?
 In case you steal my only prototype (or you build your own, even though I discouraged you), you simply plug the device into your laptop/computer, power up your Pico, plug in your favourite speakers and everything should work.
 In case of Covox/FTL/DSS/Stereo-on-1 you can use them right out of the box. In case of OPL2LPT, TNDLPT and CMSLPT you can use them in the same way as the listed devices; either with games with native support, or load their drivers/patches.
-~You can switch between modes via provided program.~ Not yet. But you can use that handy button to switch between modes yourself. 
-~If you want to check current mode, you can simply use the program.~ Again, not yet. You can try to guess, scroll through all the modes until it works or you can connect the Pico to your PC and via serial console check currently loading device.
-
-**This magical program will be available soon.**
+You can switch between modes via a tool for DOS called [PCVX.COM](https://github.com/picovox/DOS/).
 
 > [!CAUTION]
 > Don't blow your ears off! Since volume is not standardized between devices, be cautious. 
@@ -73,7 +70,7 @@ Right now, we are in pre-alpha state. However we are slowly but surely approachi
 - Support for seven LPT audio devices. ✅
 - Correct detection of them. ✅
 - PCB design you can use. 🔜
-- Support for software control (switching modes etc.) 🔜
+- Support for software control (switching modes etc.) ✅
 
 As the name *alpha 1* implies, there may be more alpha versions. I would like to finalize the device to generally usable state by the end of the alpha phase. Beta will focus mostly on testing and potentially adding more features.
 
