@@ -15,9 +15,6 @@
 #include "hardware/clocks.h"
 #include "mode_switch/mode_switch.h"
 
-// Time stored for software debounce
-volatile absolute_time_t last_change_press;
-
 // List of all devices
 #define NUM_DEVICES 7
 Device *devices[NUM_DEVICES];
@@ -42,17 +39,6 @@ bool load_device_list() {
     return true;
 }
 
-// Mode switching request
-void request_change_device(uint gpio, uint32_t events) {
-
-    if (get_absolute_time() - last_change_press < 500000) {
-        return;
-    }
-
-    last_change_press = get_absolute_time();
-    wanted_device = (wanted_device + 1) % NUM_DEVICES;
-}
-
 bool change_device(void) {
 
     if (!devices[current_device]->unload_device(devices[current_device])) {
@@ -72,15 +58,6 @@ bool change_device(void) {
 
     printf("Switched to %d\n", current_device);
     return true;
-}
-
-// Start IRQ for mode switching
-void load_change_device_irq(void) {
-    gpio_init(CHANGE_BUTTON_PIN);
-    gpio_set_dir(CHANGE_BUTTON_PIN, GPIO_IN);
-    gpio_pull_up(CHANGE_BUTTON_PIN);
-    gpio_set_irq_enabled_with_callback(CHANGE_BUTTON_PIN, GPIO_IRQ_EDGE_FALL, true, &request_change_device);
-    last_change_press = get_absolute_time();
 }
 
 // I2S library setup
