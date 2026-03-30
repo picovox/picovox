@@ -42,21 +42,17 @@ bool load_device_list() {
 bool change_device(void) {
 
     if (!devices[current_device]->unload_device(devices[current_device])) {
-        printf("Could not unload device %d\n", current_device);
         wanted_device = 0;
         return false;
     }
 
-    printf("Unloaded device %d\n", current_device);
     current_device = wanted_device;
 
     if (!devices[current_device]->load_device(devices[current_device])) {
-        printf("Could not load device %d\n", current_device);
         wanted_device = 0;
         return false;
     }
 
-    printf("Switched to %d\n", current_device);
     return true;
 }
 
