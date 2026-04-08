@@ -51,6 +51,9 @@ bool init_mode_change() {
     gpio_init(LPT_BUSY_PIN);
     gpio_put(LPT_BUSY_PIN, 0);
     gpio_set_dir(LPT_BUSY_PIN, true);
+    gpio_init(LPT_DATA_DIR);
+    gpio_put(LPT_DATA_DIR, 0);
+    gpio_set_dir(LPT_DATA_DIR, true);
     return true;
 }
 
