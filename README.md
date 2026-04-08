@@ -2,8 +2,8 @@
 > Current state: *pre-alpha*
 
 ## What is it?
-Picovox is a low-cost device that serves as an *LPT audio card for old computers* (primarily DOS).
-Picovox is able to emulate (at least partially) seven audio devices: *Covox*, *Stereo-On-1*, *FTL Sound Adapter*, *Disney Sound Source*, *OPL2LPT*, *TNDLPT* and *CMSLPT*.
+picovox is a low-cost device that serves as an *LPT audio card for old computers* (primarily DOS).
+picovox is able to emulate (at least partially) seven audio devices: *Covox*, *Stereo-On-1*, *FTL Sound Adapter*, *Disney Sound Source*, *OPL2LPT*, *TNDLPT* and *CMSLPT*.
 For more information and current progress, check out: [Dedicated vogons thread](https://www.vogons.org/viewtopic.php?t=109086)
 
 <details>
@@ -17,7 +17,7 @@ For more information and current progress, check out: [Dedicated vogons thread](
 |Disney Sound Source|✅ Not that great, but detection should be flawless.|
 |OPL2LPT|✅ Close enough to original AdLib, 48 kHz sampling rate.|
 |TNDLPT|✅ Sound is very close to the original, detection flawless.|
-|CMSLPT|❓ Experimental support, produces some sound, bad switching of control mode.|
+|CMSLPT|✅ Sound is close enough to the original.|
 
 </details>
 
@@ -74,7 +74,7 @@ Right now, we are in pre-alpha state. However we are slowly but surely approachi
 
 As the name *alpha 1* implies, there may be more alpha versions. I would like to finalize the device to generally usable state by the end of the alpha phase. Beta will focus mostly on testing and potentially adding more features.
 
-**Picovox is basically Pico 2 connected to the LPT port. It is not a coincidence I design the PCB with bidirectional data pins in mind. This device might also serve as a printer and/or storage emulator in the future.**
+**picovox is basically Pico 2 connected to the LPT port. It is not a coincidence I design the PCB with bidirectional data pins in mind. This device might also serve as a printer and/or storage emulator in the future.**
 
 ## Licensing
 All the code provided in this repository is licensed under *GPL-3.0-or-later*. 
