@@ -103,3 +103,4 @@ target_include_directories(picovox PRIVATE
 
 pico_add_extra_outputs(picovox)
 
+string(APPEND CMAKE_EXE_LINKER_FLAGS "-Wl,--print-memory-usage")

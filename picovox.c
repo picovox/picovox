@@ -115,7 +115,7 @@ int main() {
 
     init_mode_change();
 
-    load_change_device_irq();
+    //load_change_device_irq();
     
     int16_t left_sample = 0;
     int16_t right_sample = 0;
