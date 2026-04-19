@@ -178,14 +178,10 @@ size_t generate_stereo(Device *self, int16_t *left_sample, int16_t *right_sample
 }
 
 Device *create_stereo(void) {
-    Device *stereo_struct = calloc(1, sizeof(Device));
+    static Device stereo_struct;
 
-    if (stereo_struct == NULL) {
-        return NULL;
-    }
-
-    stereo_struct->load_device = load_stereo;
-    stereo_struct->unload_device = unload_stereo;
-    stereo_struct->generate_sample = generate_stereo;
-    return stereo_struct;
+    stereo_struct.load_device = load_stereo;
+    stereo_struct.unload_device = unload_stereo;
+    stereo_struct.generate_sample = generate_stereo;
+    return &stereo_struct;
 }

@@ -167,13 +167,10 @@ size_t generate_opl2(Device *self, int16_t *left_sample, int16_t *right_sample) 
 }
 
 Device *create_opl2(void) {
-    Device *opl2_struct = calloc(1, sizeof(Device));
-    if (opl2_struct == NULL) {
-        return NULL;
-    }
+    static Device opl2_struct;
 
-    opl2_struct->load_device = load_opl2;
-    opl2_struct->unload_device = unload_opl2;
-    opl2_struct->generate_sample = generate_opl2;
-    return opl2_struct;
+    opl2_struct.load_device = load_opl2;
+    opl2_struct.unload_device = unload_opl2;
+    opl2_struct.generate_sample = generate_opl2;
+    return &opl2_struct;
 }
