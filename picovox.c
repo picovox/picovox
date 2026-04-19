@@ -7,7 +7,6 @@
 #define NUM_BUFFERS 10
 #define CHANNEL_COUNT 2
 
-#include <stdio.h>
 #include <stdbool.h>
 #include "pico/stdlib.h"
 #include "pico/audio_i2s.h"
