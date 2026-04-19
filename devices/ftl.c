@@ -95,7 +95,7 @@ static inline int16_t read_sample(void) {
 
     // If all pins low -> empty sample, otherwise subtract 128 (to generate negative amplitude)
     uint8_t result = ((pio_sm_get(sound_pio, sound_sm) >> 24) & 0xFF);
-    return (result == 0) ? 0 : ((result - 128) << 8);
+    return (result == 0) ? 0 : ((result - 128) << 6);
 }
 
 // Return middle value to remove random wrong reads

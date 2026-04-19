@@ -72,7 +72,7 @@ static void core1_operation(void) {
             load_new_instruction(&register_address);
         }
 
-        ringbuffer_push(current_sample << 2);
+        ringbuffer_push(current_sample);
     }
 
     // Core 1 should be stopped -> remove device from memory

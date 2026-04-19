@@ -56,7 +56,7 @@ static bool new_sample(repeating_timer_t *timer_for_buffer) {
 
     ringbuffer_pop(&current_sample);
     is_new_sample = true;
-    current_sample = current_sample << 8;
+    current_sample = current_sample << 6;
     return true;
 }
 

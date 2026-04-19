@@ -54,7 +54,7 @@ static void reset_chip(tandy_t **device) {
 
 static void core1_operation(void) {
     tandy_t *device = tandy_create();
-    int16_t current_sample = 0;
+    int32_t current_sample = 0;
 
     while (!stop_core1) {
 
@@ -70,7 +70,7 @@ static void core1_operation(void) {
             load_new_instruction(device);
         }
 
-        ringbuffer_push(current_sample);
+        ringbuffer_push(current_sample >> 1);
     }
 
     // Core 1 should be stopped -> remove device from memory

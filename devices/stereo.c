@@ -32,11 +32,11 @@ static void get_samples(void) {
     pwm_clear_irq(pwm_slice); // After each call clear IRQ
 
     if (!pio_sm_is_rx_fifo_empty(sound_left_pio, sound_left_sm)) {
-        last_left_sample = (((pio_sm_get(sound_left_pio, sound_left_sm) >> 24) & 0xFF) - 128) << 8;
+        last_left_sample = (((pio_sm_get(sound_left_pio, sound_left_sm) >> 24) & 0xFF) - 128) << 6;
     }
 
     if (!pio_sm_is_rx_fifo_empty(sound_right_pio, sound_right_sm)) {
-        last_right_sample = (((pio_sm_get(sound_right_pio, sound_right_sm) >> 24) & 0xFF) - 128) << 8;
+        last_right_sample = (((pio_sm_get(sound_right_pio, sound_right_sm) >> 24) & 0xFF) - 128) << 6;
     }
 
     ringbuffer_push(last_left_sample);
