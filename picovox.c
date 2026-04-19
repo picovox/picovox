@@ -123,7 +123,7 @@ int main() {
 
     while (true) {
 
-        mode_change(&wanted_device, current_device);
+        mode_change(&wanted_device, current_device, devices);
         
         // Device should change => change device
         if (current_device != wanted_device) {
