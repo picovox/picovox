@@ -1,17 +1,17 @@
 #include "ringbuffer.h"
 
-#define MAX_SIZE 4096
+#define MAX_SIZE 4096 // Specifies maximal available size accross all devices
 
 static volatile size_t head = 0;
 static volatile  size_t tail = 0;
-static size_t size = 0;
+static size_t size = 0; // Specifies size of currently simulated buffer
 static volatile bool empty = true;
 
 static int16_t buffer[MAX_SIZE];
 
 bool ringbuffer_init(size_t wanted_size) {
 
-    if (wanted_size > MAX_SIZE || (wanted_size & (wanted_size - 1)) != 0) { // Check for power of 2.
+    if (wanted_size > MAX_SIZE || (wanted_size & (wanted_size - 1)) != 0) { // Check for power of 2
         return false;
     }
 
@@ -41,7 +41,7 @@ bool ringbuffer_push(int16_t pushed_data) {
     }
 
     buffer[head] = pushed_data;
-    head = (head + 1) & (size - 1);
+    head = (head + 1) & (size - 1); // Bitwise and is used instead of modulo for greater speed
     return true;
 }
 
