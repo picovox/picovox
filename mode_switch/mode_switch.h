@@ -17,6 +17,6 @@ bool init_mode_change();
  * @param current is a number representation of current device.
  * @param device_list is a list of all device pointer structs (used for unloading BUSY-using devices).
  */
-void mode_change(int8_t *change_to, int8_t current, Device ** device_list);
+void mode_change(int8_t *change_to, int8_t current, device_t ** device_list);
 
 #endif

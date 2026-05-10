@@ -7,7 +7,7 @@
 /**
  * @brief Common interface for all the simulated devices.
  */
-typedef struct Device {
+typedef struct device_t {
 
     /**
      * @brief Method loads all the things needed for using the device (such as start PIO program, initialize registers etc.)
@@ -32,7 +32,7 @@ typedef struct Device {
      * @return number of samples available in internal device buffer.
      */
     size_t (*generate_sample)(int16_t *left_sample, int16_t *right_sample);
-} Device;
+} device_t;
 
 /**
  * @brief Declarations for creating instances of all types of modes.
@@ -40,13 +40,13 @@ typedef struct Device {
  * Each mode is stored in its own file, implementing all the functions of struct above.
  * Always check if return value is not NULL (allocation failed)!
  */
-Device *create_covox();
-Device *create_stereo();
-Device *create_ftl();
-Device *create_dss();
-Device *create_opl2();
-Device *create_tandy();
-Device *create_cms();
-Device *create_debugger();
+device_t *create_covox();
+device_t *create_stereo();
+device_t *create_ftl();
+device_t *create_dss();
+device_t *create_opl2();
+device_t *create_tandy();
+device_t *create_cms();
+device_t *create_debugger();
 
 #endif // DEVICE_H

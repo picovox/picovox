@@ -91,7 +91,7 @@ static void send_number(int8_t current) {
 
 }
 
-void mode_change(int8_t *change_to, int8_t current, Device ** device_list) {
+void mode_change(int8_t *change_to, int8_t current, device_t ** device_list) {
 
     if (pio_sm_is_rx_fifo_empty(used_pio, used_sm)) {
         return;
@@ -120,11 +120,11 @@ void mode_change(int8_t *change_to, int8_t current, Device ** device_list) {
     if (wanted_mode == 170) {
         sleep_ms(50);
         if (current == 1) { // Used for devices that use BUSY pin in GPIO
-            device_list[current]->unload_device(device_list[current]);
+            device_list[current]->unload_device();
         }
         send_number(current);
         if (current == 1) {
-            device_list[current]->load_device(device_list[current]);
+            device_list[current]->load_device();
         }
         return;
     }

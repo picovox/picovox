@@ -16,7 +16,7 @@
 
 // List of all devices
 #define NUM_DEVICES 7
-Device *devices[NUM_DEVICES];
+device_t *devices[NUM_DEVICES];
 int8_t current_device = 0;
 int8_t wanted_device = 0;
 

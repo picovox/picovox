@@ -99,8 +99,8 @@ size_t generate_covox(int16_t *left_sample, int16_t *right_sample) {
     return 0;
 }
 
-Device *create_covox(void) {
-    static Device covox_struct;
+device_t *create_covox(void) {
+    static device_t covox_struct;
 
     covox_struct.load_device = load_covox;
     covox_struct.unload_device = unload_covox;

@@ -129,8 +129,8 @@ size_t generate_ftl(int16_t *left_sample, int16_t *right_sample) {
     return 0;
 }
 
-Device *create_ftl(void) {
-    static Device ftl_struct;
+device_t *create_ftl(void) {
+    static device_t ftl_struct;
 
     ftl_struct.load_device = load_ftl;
     ftl_struct.unload_device = unload_ftl;
