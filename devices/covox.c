@@ -70,13 +70,8 @@ static inline int16_t read_sample(void) {
 
 // Return middle value to remove random wrong reads
 static inline int16_t best_sample(int16_t a, int16_t b, int16_t c) {
-    int16_t max_ab = a;
-    int16_t min_ab = b;
-
-    if (a < b) {
-        max_ab = b;
-        min_ab = a;
-    }
+    int16_t max_ab = (a < b) ? b : a;
+    int16_t min_ab = (a < b) ? a : b;
 
     if (c >= max_ab) {
         return max_ab;
