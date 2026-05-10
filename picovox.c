@@ -40,14 +40,14 @@ bool load_device_list() {
 
 bool change_device(void) {
 
-    if (!devices[current_device]->unload_device(devices[current_device])) {
+    if (!devices[current_device]->unload_device()) {
         wanted_device = 0;
         return false;
     }
 
     current_device = wanted_device;
 
-    if (!devices[current_device]->load_device(devices[current_device])) {
+    if (!devices[current_device]->load_device()) {
         wanted_device = 0;
         return false;
     }
@@ -138,7 +138,7 @@ int main() {
 
         // Fill the buffer
         for (uint i = 0; i < buffer->max_sample_count; i++) {
-            devices[current_device]->generate_sample(devices[current_device], &left_sample, &right_sample);
+            devices[current_device]->generate_sample(&left_sample, &right_sample);
             samples[2 * i]     = left_sample;
             samples[2 * i + 1] = right_sample;
         }

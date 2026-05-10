@@ -77,7 +77,7 @@ static void core1_operation(void) {
     tandy_destroy(device);
 }
 
-bool load_tandy(Device *self) {
+bool load_tandy() {
     ringbuffer_init(TND_RINGBUFFER_SIZE);
 
     // Load PIO programs
@@ -145,7 +145,7 @@ bool load_tandy(Device *self) {
     return true;
 }
 
-bool unload_tandy(Device *self) {
+bool unload_tandy() {
 
     // Stop core 1
     stop_core1 = true;
@@ -169,7 +169,7 @@ bool unload_tandy(Device *self) {
     return true;
 }
 
-size_t generate_tandy(Device *self, int16_t *left_sample, int16_t *right_sample) {
+size_t generate_tandy(int16_t *left_sample, int16_t *right_sample) {
 
     if (sample_used >= SAMPLE_REPEAT) {
 

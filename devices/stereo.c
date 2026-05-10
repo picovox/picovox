@@ -43,7 +43,7 @@ static void get_samples(void) {
     ringbuffer_push(last_right_sample);
 }
 
-bool load_stereo(Device *self) {
+bool load_stereo() {
     ringbuffer_init(STEREO_RINGBUFFER_SIZE);
 
     // Load PIO programs
@@ -133,7 +133,7 @@ bool load_stereo(Device *self) {
     return true;
 }
 
-bool unload_stereo(Device *self) {
+bool unload_stereo() {
 
     // Stop getting samples
     pwm_set_enabled(pwm_slice, false);
@@ -162,7 +162,7 @@ bool unload_stereo(Device *self) {
     return true;
 }
 
-size_t generate_stereo(Device *self, int16_t *left_sample, int16_t *right_sample) { 
+size_t generate_stereo(int16_t *left_sample, int16_t *right_sample) { 
 
     // Wait for sample if none is generated (cannot lock since samples are generated automatically)
     while (!ringbuffer_pop(left_sample)) {

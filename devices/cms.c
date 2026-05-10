@@ -103,7 +103,7 @@ static void core1_operation(void) {
     gameblaster_destroy(device);
 }
 
-bool load_cms(Device *self) {
+bool load_cms() {
     ringbuffer_init(CMS_RINGBUFFER_SIZE);
 
     // Load PIO programs (each chip has its own)
@@ -188,7 +188,7 @@ bool load_cms(Device *self) {
     return true;
 }
 
-bool unload_cms(Device *self) {
+bool unload_cms() {
 
     // Stop core 1
     stop_core1 = true;
@@ -212,7 +212,7 @@ bool unload_cms(Device *self) {
     return true;
 }
 
-size_t generate_cms(Device *self, int16_t *left_sample, int16_t *right_sample) {
+size_t generate_cms(int16_t *left_sample, int16_t *right_sample) {
 
     if (sample_used >= SAMPLE_REPEAT) {
 

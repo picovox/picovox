@@ -60,7 +60,7 @@ static bool new_sample(repeating_timer_t *timer_for_buffer) {
     return true;
 }
 
-bool load_dss(Device *self) {
+bool load_dss() {
     ringbuffer_init(DSS_RINGBUFFER_SIZE);
 
     // Load PIO program
@@ -101,7 +101,7 @@ bool load_dss(Device *self) {
     return true;
 }
 
-bool unload_dss(Device *self) {
+bool unload_dss() {
 
     // Stop buffer unloading
     cancel_repeating_timer(&dss_buffer_timer);
@@ -146,7 +146,7 @@ static inline void correct_sample(void) {
     sample_repeated++;
 }
 
-size_t generate_dss(Device *self, int16_t *left_sample, int16_t *right_sample) {
+size_t generate_dss(int16_t *left_sample, int16_t *right_sample) {
     correct_sample();
     *left_sample = repeated_sample;
     *right_sample = repeated_sample;

@@ -16,7 +16,7 @@ static PIO detection_pio;
 static int8_t detection_sm;
 static int detection_offset;
 
-bool load_ftl(Device *self) {
+bool load_ftl() {
 
     // Load PIO programs
     sound_offset = pio_manager_load(&sound_pio, &sound_sm, &ftl_sound_program);
@@ -68,7 +68,7 @@ bool load_ftl(Device *self) {
     return true;
 }
 
-bool unload_ftl(Device *self) {
+bool unload_ftl() {
 
     // Stop PIO programs
     pio_sm_set_enabled(sound_pio, sound_sm, false);
@@ -119,7 +119,7 @@ static inline int16_t best_sample(int16_t a, int16_t b, int16_t c) {
     return min_ab;
 }
 
-size_t generate_ftl(Device *self, int16_t *left_sample, int16_t *right_sample) {
+size_t generate_ftl(int16_t *left_sample, int16_t *right_sample) {
     int16_t sample1 = read_sample();
     int16_t sample2 = read_sample();
     int16_t sample3 = read_sample();

@@ -12,7 +12,7 @@ static PIO used_pio;
 static int8_t used_sm;
 static int used_offset;
 
-bool load_covox(Device *self) {
+bool load_covox() {
 
     // Load PIO program
     used_offset = pio_manager_load(&used_pio, &used_sm, &covox_program);
@@ -42,7 +42,7 @@ bool load_covox(Device *self) {
     return true;
 }
 
-bool unload_covox(Device *self) {
+bool unload_covox() {
 
     // Stop PIO program
     pio_sm_set_enabled(used_pio, used_sm, false);
@@ -89,7 +89,7 @@ static inline int16_t best_sample(int16_t a, int16_t b, int16_t c) {
     return min_ab;
 }
 
-size_t generate_covox(Device *self, int16_t *left_sample, int16_t *right_sample) {
+size_t generate_covox(int16_t *left_sample, int16_t *right_sample) {
     int16_t sample1 = read_sample();
     int16_t sample2 = read_sample();
     int16_t sample3 = read_sample();

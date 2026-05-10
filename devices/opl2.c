@@ -79,7 +79,7 @@ static void core1_operation(void) {
     OPL_Pico_delete();
 }
 
-bool load_opl2(Device *self) {
+bool load_opl2() {
     ringbuffer_init(OPL_RINGBUFFER_SIZE);
 
     // Load PIO program
@@ -124,7 +124,7 @@ bool load_opl2(Device *self) {
     return true;
 }
 
-bool unload_opl2(Device *self) {
+bool unload_opl2() {
 
     // Stop core 1
     stop_core1 = true;
@@ -143,7 +143,7 @@ bool unload_opl2(Device *self) {
     return true;
 }
 
-size_t generate_opl2(Device *self, int16_t *left_sample, int16_t *right_sample) {
+size_t generate_opl2(int16_t *left_sample, int16_t *right_sample) {
 
     if (sample_used >= SAMPLE_REPEAT) {
 

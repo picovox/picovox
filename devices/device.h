@@ -12,31 +12,26 @@ typedef struct Device {
     /**
      * @brief Method loads all the things needed for using the device (such as start PIO program, initialize registers etc.)
      * 
-     * @param self is a pointer to the simulated device itself.
-     * 
      * @return true if device is loaded, false if anything failed.
      */
-    bool (*load_device)(struct Device *self);
+    bool (*load_device)();
 
     /**
      * @brief Method unloads all the things needed after using the device (such as the PIO program etc.)
      * 
-     * @param self is a pointer to the simulated device itself.
-     * 
      * @return true if device is unloaded, false if anything failed.
      */
-    bool (*unload_device)(struct Device *self);
+    bool (*unload_device)();
 
     /**
      * @brief Function reads data from PIO buffer and generates a sound sample based on data sent.
      * 
-     * @param self is a pointer to the simulated device itself.
      * @param left_sample is a pointer to number where sample for left channel is placed.
      * @param right_sample is a pointer to number where sample for right channel is placed.
      * 
      * @return number of samples available in internal device buffer.
      */
-    size_t (*generate_sample)(struct Device *self, int16_t *left_sample, int16_t *right_sample);
+    size_t (*generate_sample)(int16_t *left_sample, int16_t *right_sample);
 } Device;
 
 /**
