@@ -130,10 +130,6 @@ size_t generate_ftl(int16_t *left_sample, int16_t *right_sample) {
 }
 
 device_t *create_ftl(void) {
-    static device_t ftl_struct;
-
-    ftl_struct.load_device = load_ftl;
-    ftl_struct.unload_device = unload_ftl;
-    ftl_struct.generate_sample = generate_ftl;
+    static device_t ftl_struct = {load_ftl, unload_ftl, generate_ftl};
     return &ftl_struct;
 }

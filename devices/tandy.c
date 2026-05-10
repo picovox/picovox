@@ -193,10 +193,6 @@ size_t generate_tandy(int16_t *left_sample, int16_t *right_sample) {
 }
 
 device_t *create_tandy(void) {
-    static device_t tandy_struct;
-
-    tandy_struct.load_device = load_tandy;
-    tandy_struct.unload_device = unload_tandy;
-    tandy_struct.generate_sample = generate_tandy;
+    static device_t tandy_struct = {load_tandy, unload_tandy, generate_tandy};
     return &tandy_struct;
 }

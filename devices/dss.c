@@ -154,10 +154,6 @@ size_t generate_dss(int16_t *left_sample, int16_t *right_sample) {
 }
 
 device_t *create_dss(void) {
-    static device_t dss_struct;
-
-    dss_struct.load_device = load_dss;
-    dss_struct.unload_device = unload_dss;
-    dss_struct.generate_sample = generate_dss;
+    static device_t dss_struct = {load_dss, unload_dss, generate_dss};
     return &dss_struct;
 }

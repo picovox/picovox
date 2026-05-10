@@ -243,10 +243,6 @@ size_t generate_cms(int16_t *left_sample, int16_t *right_sample) {
 }
 
 device_t *create_cms(void) {
-    static device_t cms_struct;
-
-    cms_struct.load_device = load_cms;
-    cms_struct.unload_device = unload_cms;
-    cms_struct.generate_sample = generate_cms;
+    static device_t cms_struct = {load_cms, unload_cms, generate_cms};
     return &cms_struct;
 }

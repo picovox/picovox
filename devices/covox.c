@@ -100,10 +100,6 @@ size_t generate_covox(int16_t *left_sample, int16_t *right_sample) {
 }
 
 device_t *create_covox(void) {
-    static device_t covox_struct;
-
-    covox_struct.load_device = load_covox;
-    covox_struct.unload_device = unload_covox;
-    covox_struct.generate_sample = generate_covox;
+    static device_t covox_struct = {load_covox, unload_covox, generate_covox};
     return &covox_struct;
 }
