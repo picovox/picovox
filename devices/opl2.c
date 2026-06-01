@@ -7,7 +7,6 @@
 #include "ringbuffer.h"
 #include "dbopl/dbopl_c.h"
 #include "pico/multicore.h"
-#include <stdio.h>
 #include "opl2.pio.h"
 
 // Buffer storing samples generated
