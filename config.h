@@ -25,6 +25,9 @@
 // Definition of unused pin
 #define PICO_UNUSED_PIN 22
 
+// Defnition of Volume Mute button
+#define PICO_AUDIO_MUTE 29
+
 // Definitions of GPIO mode switch button (GPIO - ground)
 #define CHANGE_BUTTON_PIN 18
 

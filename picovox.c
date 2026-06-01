@@ -55,6 +55,13 @@ bool change_device(void) {
     return true;
 }
 
+void unmute_device(void) {
+    gpio_init(PICO_AUDIO_MUTE);
+    gpio_set_dir(PICO_AUDIO_MUTE, GPIO_OUT);
+
+    gpio_put(PICO_AUDIO_MUTE, true); // Unmutes device
+}
+
 // I2S library setup
 audio_buffer_pool_t *load_audio(void) {
 
@@ -115,6 +122,8 @@ int main() {
     init_mode_change();
 
     //load_change_device_irq();
+
+    unmute_device();
     
     int16_t left_sample = 0;
     int16_t right_sample = 0;

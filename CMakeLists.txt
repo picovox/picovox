@@ -40,9 +40,6 @@ project(picovox C CXX ASM)
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
-# Include emu8950 library
-add_subdirectory(opl)
-
 # Add executable. Default name is the project name, version 0.1
 
 add_executable(picovox 
@@ -59,7 +56,9 @@ add_executable(picovox
         devices/debugger.c 
         mode_switch/mode_switch.c
         square/square.cpp 
-        square/square_c.cpp)
+        square/square_c.cpp
+        dbopl/dbopl.cpp
+        dbopl/dbopl_c.cpp)
 
 # Add all PIOs to compile
 pico_generate_pio_header(${PROJECT_NAME}
@@ -89,8 +88,7 @@ target_link_libraries(picovox
         hardware_pwm
         hardware_irq
         pico_audio_i2s 
-        pico_multicore
-        opl )
+        pico_multicore)
 
 # Add the standard include files to the build
 target_include_directories(picovox PRIVATE
