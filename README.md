@@ -61,7 +61,7 @@ You can switch between modes via a tool for DOS called [PCVX.COM](https://github
 ## Progress and future
 Right now, we are in *alpha 1* state. For *alpha 2* I would like to complete the following milestones:
 
-- Support for OPL3LPT. ❌
+- Support for OPL3LPT. ✅
 - PCB design using SMD components (fully compatible with current model). ❌
 - Control utility for Linux. ❌
 - Fixing of the major bugs in current codebase. ❌
@@ -82,12 +82,12 @@ It's entirely up to you – I won't be mad at any gift, you know?*
 Thank you all for your support. Not only have you visited this page, you have also read all the way down there! (Unless you skipped right at the end and missed potentially useful information.) 
 Still, there are some people and projects I would like to thank explicitly:
 
-- [Serdaco](https://www.serdaco.com/default.aspx) for distribution of the OPL2LPT, CMSLPT, TNDLPT and many other devices. Please, in case you prefer real sound over emulated, 
+- [Serdaco](https://www.serdaco.com/default.aspx) for distribution of the [OPL3LPT](https://www.serdashop.com/OPL3LPT), [CMSLPT](https://www.serdashop.com/CMSLPT), [TNDLPT](https://www.serdashop.com/TNDLPT) and many other devices. Please, in case you prefer real sound over emulated, 
 these are the devices you are probably looking for. Furthermore for his tips and feedback regarding the picovox project.
 - [Ian Scott](@polpo) and the whole team around PicoGUS for inspiring me and for helping me with OPL2 emulation.
 - [Jarno Lehtinen](https://github.com/mcgurk/Covox) for his McDSS, pretty similar device built on top of ESP32.
 - [The Raspberry Pi](@raspberrypi) for providing not only excellent pieces of hardware, but also great C SDK together with tons of libraries (and pico-extras library too).
-- [Graham Sanderson](https://github.com/kilograham/rp2040-doom) (OPL2) and [Aaron Giles](https://aarongiles.com/) (TND, CMS) for providing sound emulation libraries to PicoGUS (that I could use).
+- [The DosBox team](https://www.dosbox.com/index.php) (OPL3) and [Aaron Giles](https://aarongiles.com/) (TND, CMS) for providing sound emulation libraries to PicoGUS (that I could use).
 - [VOGONS community](https://www.vogons.org/) for a place to share my ideas and to find people with similar interests.
 
 - *My family, my friends and everyone who has supported me in any way. Without you I would not have done it.*
