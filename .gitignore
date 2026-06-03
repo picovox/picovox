@@ -1,5 +1,0 @@
-build
-todo.txt
-.vscode/*
-devices/debugger.c
-devices/pio/debugger.pio
