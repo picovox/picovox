@@ -51,6 +51,7 @@ add_executable(picovox
         devices/ftl.c 
         devices/dss.c 
         devices/opl2.c 
+        devices/opl3.c 
         devices/tandy.c 
         devices/cms.c 
         devices/debugger.c 
@@ -67,6 +68,7 @@ pico_generate_pio_header(${PROJECT_NAME}
     ${PIO_PATH}/ftl.pio
     ${PIO_PATH}/dss.pio
     ${PIO_PATH}/opl2.pio
+    ${PIO_PATH}/opl3.pio
     ${PIO_PATH}/tandy.pio
     ${PIO_PATH}/cms.pio
     ${CMAKE_CURRENT_LIST_DIR}/mode_switch/mode_switch.pio

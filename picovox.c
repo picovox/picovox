@@ -15,7 +15,7 @@
 #include "mode_switch/mode_switch.h"
 
 // List of all devices
-#define NUM_DEVICES 7
+#define NUM_DEVICES 8
 device_t *devices[NUM_DEVICES];
 int8_t current_device = 0;
 int8_t wanted_device = 0;
@@ -28,6 +28,7 @@ bool load_device_list() {
     devices[4] = create_opl2();
     devices[5] = create_tandy();
     devices[6] = create_cms();
+    devices[7] = create_opl3();
 
     for (int i = 0; i < NUM_DEVICES; i++) {
         if (devices[i] == NULL) {
