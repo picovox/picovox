@@ -5,8 +5,7 @@ struct DBOPL_Device {
     DBOPL::Chip* chip;
 };
 
-DBOPL_Device* dbopl_create(int sample_rate)
-{
+DBOPL_Device* dbopl_create(int sample_rate) {
     DBOPL_Device* dev = new DBOPL_Device();
 
     dev->chip = new DBOPL::Chip(true);
@@ -15,30 +14,20 @@ DBOPL_Device* dbopl_create(int sample_rate)
     return dev;
 }
 
-void dbopl_destroy(DBOPL_Device* dev)
-{
-    if (!dev)
+void dbopl_destroy(DBOPL_Device* dev) {
+    if (!dev) {
         return;
+    }
 
     delete dev->chip;
     delete dev;
 }
 
-void dbopl_write_reg(
-    DBOPL_Device* dev,
-    uint16_t reg,
-    uint8_t value
-)
-{
+void dbopl_write_reg(DBOPL_Device* dev, uint16_t reg, uint8_t value) {
     dev->chip->WriteReg(reg, value);
 }
 
-void dbopl_generate(
-    DBOPL_Device* dev,
-    int16_t* left,
-    int16_t* right
-)
-{
+void dbopl_generate(DBOPL_Device* dev, int16_t* left, int16_t* right) {
     int32_t buffer[2];
 
     dev->chip->GenerateBlock3(1, buffer);
@@ -54,4 +43,20 @@ void dbopl_generate(
 
     *left  = (int16_t)l;
     *right = (int16_t)r;
+}
+
+void dbopl_generate2(DBOPL_Device* dev, int16_t* sample) {
+    int32_t curr_sample[2];
+
+    dev->chip->GenerateBlock2(1, curr_sample);
+
+    if (curr_sample[0] < -32768) {
+        curr_sample[0] = -32768;
+    }
+
+    if (curr_sample[0] > 32767) {
+        curr_sample[0] = 32767;
+    }
+
+    *sample = (int16_t)curr_sample[0];
 }
