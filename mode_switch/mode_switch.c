@@ -112,7 +112,7 @@ void mode_change(int8_t *change_to, int8_t current, device_t ** device_list) {
     // Change emulated device
     if ((wanted_mode >> 6) == 3) {
         uint8_t wanted_device = ((wanted_mode >> 1) & 31) - 2;
-        *change_to = (wanted_device >= 0 && wanted_device < 7) ? wanted_device : 0;
+        *change_to = (wanted_device >= 0 && wanted_device < 8) ? wanted_device : 0;
         return;
     }
 
