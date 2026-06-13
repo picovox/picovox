@@ -58,6 +58,7 @@ add_executable(picovox
         mode_switch/mode_switch.c
         square/square.cpp 
         square/square_c.cpp
+        nuked_opl/opl2.c
         dbopl/dbopl.cpp
         dbopl/dbopl_c.cpp)
 

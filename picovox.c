@@ -12,6 +12,7 @@
 #include "pico/audio_i2s.h"
 #include "device.h"
 #include "hardware/clocks.h"
+#include "hardware/vreg.h"
 #include "mode_switch/mode_switch.h"
 
 // List of all devices
@@ -102,9 +103,9 @@ audio_buffer_pool_t *load_audio(void) {
 
 // Main function
 int main() {
+    set_sys_clock_khz(280000, false); // Overclock 280 MHz (tested as safe and stable, other projects run even faster)
+    sleep_ms(100);
     stdio_init_all();
-    set_sys_clock_khz(250000, true); // Overclock 250 MHz (tested as safe and stable)
-    sleep_ms(1000);
 
     if (!load_device_list()) {
         return 1;

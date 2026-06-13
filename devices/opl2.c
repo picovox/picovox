@@ -5,8 +5,9 @@
 #include "device.h"
 #include "pio_manager.h"
 #include "ringbuffer.h"
-#include "dbopl/dbopl_c.h"
+#include "nuked_opl/opl2.h"
 #include "pico/multicore.h"
+#include "hardware/clocks.h"
 #include "opl2.pio.h"
 
 // Buffer storing samples generated
@@ -23,12 +24,13 @@ static int used_offset;
 // Since emulator runs at half the rate, repeat all samples twice
 static int16_t last_sample = 0;
 static int8_t sample_used = 0;
+static opl2_chip opl_chip;
 
 // Killswitch for core 1
 static volatile bool stop_core1 = false;
 
 // Chip emulation - running on core 1
-static void load_new_instruction(int16_t *register_address, DBOPL_Device* opl) {
+static void load_new_instruction(int16_t *register_address, opl2_chip* opl) {
 
     // If no instruction, go back, cannot happen (failsafe)
     if (pio_sm_is_rx_fifo_empty(used_pio, used_sm)) {
@@ -49,35 +51,32 @@ static void load_new_instruction(int16_t *register_address, DBOPL_Device* opl) {
     if (((new_instruction >> 8) & 1) == 0) {
         *register_address = (new_instruction & 255);
     } else {
-        dbopl_write_reg(opl, *register_address, (new_instruction & 255));
+        OPL2_WriteReg(opl, *register_address, (new_instruction & 255));
     }
 #endif
 }
 
 static void core1_operation(void) {
-    DBOPL_Device* opl = dbopl_create(SAMPLE_RATE/SAMPLE_REPEAT);
-    int16_t current_sample = 0;
+    OPL2_Reset(&opl_chip, SAMPLE_RATE/SAMPLE_REPEAT);
+    int16_t buf[2];
     int16_t register_address = 0;
 
     while (!stop_core1) {
 
         // Before generating new sample load all instructions
         while ((!pio_sm_is_rx_fifo_empty(used_pio, used_sm))) {
-            load_new_instruction(&register_address, opl);
+            load_new_instruction(&register_address, &opl_chip);
         }
 
-        dbopl_generate2(opl, &current_sample);
+        OPL2_GenerateResampled(&opl_chip, buf);
 
         // While ringbuffer is full, load new instructions
         while (ringbuffer_is_full() && !stop_core1) {
-            load_new_instruction(&register_address, opl);
+            load_new_instruction(&register_address, &opl_chip);
         }
 
-        ringbuffer_push(current_sample);
+        ringbuffer_push(buf[0]);
     }
-
-    // Core 1 should be stopped -> remove device from memory
-    dbopl_destroy(opl);
 }
 
 bool load_opl2() {
